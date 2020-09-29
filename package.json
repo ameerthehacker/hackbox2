@@ -15,7 +15,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "styled-components": "^5.2.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "vscode-codicons": "0.0.12"
   },
   "scripts": {
     "start": "react-scripts start",

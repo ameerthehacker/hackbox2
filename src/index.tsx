@@ -1,11 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/app';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import App from './pages/app/app';
 import * as serviceWorker from './serviceWorker';
+import nightOwl from './themes/night-owl';
+import 'vscode-codicons/dist/codicon.css';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    padding: 0;
+    margin: 0;
+  }
+`
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={nightOwl}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

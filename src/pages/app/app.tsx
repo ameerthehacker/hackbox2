@@ -1,5 +1,8 @@
 import React from 'react';
+import Sidebar from '../../components/sidebar/sidebar';
 
 export default function App() {
-  return <h1>hello world!</h1>;
+  return (
+    <Sidebar onSidebarItemClicked={name => console.log(name)} />
+  );
 }
