@@ -50,11 +50,19 @@ export default function Sidebar({ onSidebarItemClicked }: SidebarProps) {
   return (
     <Container>
       <div>
-        <SidebarItem isSelected={selectedItem === 'files'} className="codicon codicon-files" onClick={onClicked(onSidebarItemClicked, 'files')} />
-        <SidebarItem isSelected={selectedItem === 'search'} onClick={onClicked(onSidebarItemClicked, 'search')} className="codicon codicon-search" />
+        <SidebarItem 
+          isSelected={selectedItem === 'files'} 
+          className="codicon codicon-files" 
+          onClick={onClicked(onSidebarItemClicked, 'files')} 
+        />
+        <SidebarItem 
+          isSelected={selectedItem === 'search'} 
+          onClick={onClicked(onSidebarItemClicked, 'search')} 
+          className="codicon codicon-search" 
+        />
       </div>
       <div>
-        <SidebarItem className="codicon codicon-gear" />
+        <SidebarItem />
       </div>
     </Container>
   )
