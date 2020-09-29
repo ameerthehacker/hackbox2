@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   background: ${(props) => props.theme.colors['sideBar.background']};
   color: ${(props) => props.theme.colors['sideBar.foreground']};
-  height: 100vh;
+  height: 100%;
   width: 60px;
   display: flex;
   justify-content: space-between;
@@ -62,7 +62,7 @@ export default function Sidebar({ onSidebarItemClicked }: SidebarProps) {
         />
       </div>
       <div>
-        <SidebarItem />
+        <SidebarItem className="codicon codicon-gear" />
       </div>
     </Container>
   )

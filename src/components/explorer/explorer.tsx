@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 300px;
   background: ${props => props.theme.colors['sideBar.background']};
   color: ${(props) => props.theme.colors['sideBar.foreground']};
