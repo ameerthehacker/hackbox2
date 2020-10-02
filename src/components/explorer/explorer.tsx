@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import FileTree from './components/file-tree/file-tree';
+import { Collapse } from 'react-collapse';
+import { findAllByTestId } from '@testing-library/react';
 
 const Container = styled.div`
   height: 100%;
   width: 300px;
   background: ${props => props.theme.colors['sideBar.background']};
   color: ${(props) => props.theme.colors['sideBar.foreground']};
+  user-select: none;
 `;
 
 const Header = styled.div`
@@ -27,9 +30,10 @@ const SectionHeader = styled.div`
   color: ${props => props.theme.colors['sideBarSectionHeader.foreground']};
   border-bottom: 1px solid ${props => props.theme.colors['contrastBorder']};
   display: flex;
+  cursor: pointer;
 `;
 
-const SectionContent = styled.div`
+const SectionContent = styled(Collapse)`
   font-size: 0.9em;
 `;
 
@@ -41,6 +45,28 @@ const Sections = styled.div`
   margin-top: 5px;
 `;
 
+type SectionProps = {
+  title: string;
+  children?: ReactNode;
+  defaultOpen?: boolean;
+}
+
+const Section = ({ title, children, defaultOpen }: SectionProps) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  return (
+    <div>
+      <SectionHeader onClick={() => setIsOpen(isOpen => !isOpen)}>
+        <div className={`codicon codicon-chevron-${isOpen? 'down': 'right'}`}></div>
+        <SectionHeaderText>{title}</SectionHeaderText>
+      </SectionHeader>
+      <SectionContent isOpened={isOpen || false}>
+        {children}
+      </SectionContent>
+    </div>
+  )
+}
+
 export default function Explorer() {
   return (
     <Container>
@@ -48,21 +74,10 @@ export default function Explorer() {
         Explorer
       </Header>
       <Sections>
-        <div>
-          <SectionHeader>
-            <div className="codicon codicon-chevron-right"></div>
-            <SectionHeaderText>Open Files</SectionHeaderText>
-          </SectionHeader>
-        </div>
-        <div>
-          <SectionHeader>
-            <div className="codicon codicon-chevron-right"></div>
-            <SectionHeaderText>Hackbox</SectionHeaderText>
-          </SectionHeader>
-          <SectionContent>
-            <FileTree />
-          </SectionContent>
-        </div>
+        <Section title="Open Files" />
+        <Section title="Hackbox">
+          <FileTree />
+        </Section>
       </Sections>
     </Container>
   )

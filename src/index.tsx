@@ -28,6 +28,10 @@ const GlobalStyle = createGlobalStyle`
   .node-wrapper {
     user-select: none;
   }
+
+  .ReactCollapse--collapse {
+    transition: height 150ms;
+  }
 `
 
 ReactDOM.render(
