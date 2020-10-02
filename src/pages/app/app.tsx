@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import EmptyState from '../../components/empty-state/empty-state';
-import Explorer from '../../components/explorer/explorer';
-import Sidebar from '../../components/sidebar/sidebar';
+import SideBar from '../../components/sidebar/sidebar';
+import ActivityBar from '../../components/activity-bar/activity-bar';
 import Statusbar from '../../components/statusbar/statusbar';
 
 const Container = styled.div`
@@ -18,8 +18,8 @@ export default function App() {
   return (
     <Container>
       <Workspace>
-        <Sidebar onSidebarItemClicked={name => console.log(name)} />
-        <Explorer />
+        <ActivityBar onSidebarItemClicked={name => console.log(name)} />
+        <SideBar />
         <EmptyState />
       </Workspace>
       <Statusbar />

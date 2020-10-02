@@ -1,69 +1,83 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
+import FileTree from './components/file-tree/file-tree';
+import { Collapse } from 'react-collapse';
 
 const Container = styled.div`
-  background: ${(props) => props.theme.colors['activityBar.background']};
-  color: ${(props) => props.theme.colors['activityBar.foreground']};
   height: 100%;
-  width: 60px;
+  width: 300px;
+  background: ${props => props.theme.colors['sideBar.background']};
+  color: ${(props) => props.theme.colors['sideBar.foreground']};
+  user-select: none;
+`;
+
+const Header = styled.div`
+  height: 20px;
+  text-transform: uppercase;
+  font-size: 0.78em;
+  padding-top: 15px;
+  padding-left: 20px;
+  color: ${props => props.theme.colors['sideBarSectionHeader.foreground']};
+`;
+
+const SectionHeader = styled.div`
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 5px;
+  padding-left: 0;
+  color: ${props => props.theme.colors['sideBarSectionHeader.foreground']};
+  border-bottom: 1px solid ${props => props.theme.colors['contrastBorder']};
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-`;
-
-type SidebarItemProps = {
-  isSelected?: boolean
-}
-
-const SidebarItem = styled.div<SidebarItemProps>`
-  font-size: 2em !important;
-  padding: 15px 0;
-  width: 100%;
-  opacity: ${props => props.isSelected? 1: 0.6};
   cursor: pointer;
-  &:hover {
-    opacity: 1
-  }
-  border-left: ${props => props.isSelected? 
-  `2px solid ${props.theme.colors['activityBar.foreground']}`: 
-  `2px solid ${props.theme.colors['activityBar.background']}`};
 `;
 
-type SidebarProps = {
-  onSidebarItemClicked: (itemName: string | null) => void;
+const SectionContent = styled(Collapse)`
+  font-size: 0.9em;
+`;
+
+const SectionHeaderText = styled.div`
+  margin-left: 5px;
+`;
+
+const Sections = styled.div`
+  margin-top: 5px;
+`;
+
+type SectionProps = {
+  title: string;
+  children?: ReactNode;
+  defaultOpen?: boolean;
 }
 
-export default function Sidebar({ onSidebarItemClicked }: SidebarProps) {
-  const onClicked = (fn: (name: string | null) => void, name: string) => () => {
-    setSelectedItem(name);
-
-    if (name === selectedItem) {
-      setSelectedItem(null);
-      fn(null);
-    } else {
-      fn(name);
-    }
-  };
-  const [selectedItem, setSelectedItem] = useState<string|null>('files');
+const Section = ({ title, children, defaultOpen }: SectionProps) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
+    <div>
+      <SectionHeader onClick={() => setIsOpen(isOpen => !isOpen)}>
+        <div className={`codicon codicon-chevron-${isOpen? 'down': 'right'}`}></div>
+        <SectionHeaderText>{title}</SectionHeaderText>
+      </SectionHeader>
+      <SectionContent isOpened={isOpen || false}>
+        {children}
+      </SectionContent>
+    </div>
+  )
+}
+
+export default function SideBar() {
+  return (
     <Container>
-      <div>
-        <SidebarItem 
-          isSelected={selectedItem === 'files'} 
-          className="codicon codicon-files" 
-          onClick={onClicked(onSidebarItemClicked, 'files')} 
-        />
-        <SidebarItem 
-          isSelected={selectedItem === 'search'} 
-          onClick={onClicked(onSidebarItemClicked, 'search')} 
-          className="codicon codicon-search" 
-        />
-      </div>
-      <div>
-        <SidebarItem className="codicon codicon-gear" />
-      </div>
+      <Header>
+        Explorer
+      </Header>
+      <Sections>
+        <Section title="Open Files" />
+        <Section title="Hackbox">
+          <FileTree />
+        </Section>
+      </Sections>
     </Container>
   )
 }
