@@ -14,7 +14,7 @@ const Header = styled.div`
   text-transform: uppercase;
   font-size: 0.78em;
   padding-top: 15px;
-  padding-left: 5px;
+  padding-left: 20px;
   color: ${props => props.theme.colors['sideBarSectionHeader.foreground']};
 `;
 
@@ -38,7 +38,7 @@ const SectionHeaderText = styled.div`
 `;
 
 const Sections = styled.div`
-  margin-top: 12px;
+  margin-top: 5px;
 `;
 
 export default function Explorer() {

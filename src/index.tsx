@@ -4,6 +4,7 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import App from './pages/app/app';
 import * as serviceWorker from './serviceWorker';
 import nightOwl from './themes/night-owl';
+import shadesOfPurple from './themes/shades-of-purple';
 import 'vscode-codicons/dist/codicon.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -31,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={nightOwl}>
+    <ThemeProvider theme={shadesOfPurple}>
       <GlobalStyle />
       <App />
     </ThemeProvider>

@@ -16,6 +16,17 @@ const files = {
       isDir: true,
       children: [
         {
+          id: 8,
+          name: 'navbar',
+          isDir: true,
+          children: [
+            {
+              id: 9,
+              name: 'navbar.js'
+            }
+          ]
+        },
+        {
           id: 5,
           name: 'app.js',
         },
