@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import EmptyState from '../../components/empty-state/empty-state';
 import SideBar from '../../components/sidebar/sidebar';
 import ActivityBar from '../../components/activity-bar/activity-bar';
 import Statusbar from '../../components/statusbar/statusbar';
+import Editor from '../../components/editor/editor';
 
 const Container = styled.div`
   height: 100vh;
@@ -20,7 +20,7 @@ export default function App() {
       <Workspace>
         <ActivityBar onSidebarItemClicked={name => console.log(name)} />
         <SideBar />
-        <EmptyState />
+        <Editor />
       </Workspace>
       <Statusbar />
     </Container>

@@ -3,6 +3,7 @@
   "version": "0.0.0-development",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^5.7.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -12,20 +13,21 @@
     "@types/react-collapse": "^5.0.0",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.3",
+    "monaco-editor-webpack-plugin": "^2.0.0",
     "react": "^16.13.1",
     "react-collapse": "^5.0.1",
     "react-dom": "^16.13.1",
     "react-hyper-tree": "^0.2.18",
+    "react-monaco-editor": "^0.40.0",
     "react-scripts": "3.4.3",
     "styled-components": "^5.2.0",
     "typescript": "^3.7.5",
     "vscode-codicons": "0.0.12"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": "react-app"
