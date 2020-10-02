@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  background: ${(props) => props.theme.colors['sideBar.background']};
-  color: ${(props) => props.theme.colors['sideBar.foreground']};
+  background: ${(props) => props.theme.colors['activityBar.background']};
+  color: ${(props) => props.theme.colors['activityBar.foreground']};
   height: 100%;
   width: 60px;
   display: flex;
@@ -26,8 +26,8 @@ const SidebarItem = styled.div<SidebarItemProps>`
     opacity: 1
   }
   border-left: ${props => props.isSelected? 
-  `2px solid ${props.theme.colors['sideBar.foreground']}`: 
-  `2px solid ${props.theme.colors['sideBar.background']}`};
+  `2px solid ${props.theme.colors['activityBar.foreground']}`: 
+  `2px solid ${props.theme.colors['activityBar.background']}`};
 `;
 
 type SidebarProps = {

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import FileTree from './components/file-tree/file-tree';
 
 const Container = styled.div`
   height: 100%;
@@ -28,6 +29,10 @@ const SectionHeader = styled.div`
   display: flex;
 `;
 
+const SectionContent = styled.div`
+  font-size: 0.9em;
+`;
+
 const SectionHeaderText = styled.div`
   margin-left: 5px;
 `;
@@ -43,14 +48,21 @@ export default function Explorer() {
         Explorer
       </Header>
       <Sections>
-        <SectionHeader>
-          <div className="codicon codicon-chevron-right"></div>
-          <SectionHeaderText>Open Files</SectionHeaderText>
-        </SectionHeader>
-        <SectionHeader>
-          <div className="codicon codicon-chevron-right"></div>
-          <SectionHeaderText>Hackbox</SectionHeaderText>
-        </SectionHeader>
+        <div>
+          <SectionHeader>
+            <div className="codicon codicon-chevron-right"></div>
+            <SectionHeaderText>Open Files</SectionHeaderText>
+          </SectionHeader>
+        </div>
+        <div>
+          <SectionHeader>
+            <div className="codicon codicon-chevron-right"></div>
+            <SectionHeaderText>Hackbox</SectionHeaderText>
+          </SectionHeader>
+          <SectionContent>
+            <FileTree />
+          </SectionContent>
+        </div>
       </Sections>
     </Container>
   )

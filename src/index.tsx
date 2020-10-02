@@ -10,6 +10,22 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
+    font-family: Inter, Roboto, sans-serif;
+  }
+
+  .selected-node-wrapper {
+    background: ${(props: any) => props.theme.colors['list.activeSelectionBackground']};
+    color: ${(props: any) => props.theme.colors['list.activeSelectionForeground']};
+  }
+
+  :not(.selected-node-wrapper).node-wrapper:hover {
+    background: ${(props: any) => props.theme.colors['list.hoverBackground']};
+    color: ${(props: any) => props.theme.colors['list.hoverForeground']};
+    user-select: none;
+  }
+
+  .node-wrapper {
+    user-select: none;
   }
 `
 

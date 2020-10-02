@@ -6,7 +6,6 @@ import Sidebar from '../../components/sidebar/sidebar';
 import Statusbar from '../../components/statusbar/statusbar';
 
 const Container = styled.div`
-  font-family: Consolas,monaco,monospace;
   height: 100vh;
 `;
 
