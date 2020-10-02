@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import Tree, { DefaultNodeProps, treeHandlers, useTreeState } from 'react-hyper-tree';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { ReactComponent as FolderCloseIcon } from './folder-close.svg';
 import { ReactComponent as FolderOpenIcon } from './folder-open.svg';
 import { ReactComponent as JavaScriptIcon } from './javascript.svg';
@@ -59,6 +59,22 @@ const IconContainer = styled.div<{ isFile?: boolean }>`
   margin-left: ${props => props.isFile? "15px": "5px"};
 `;
 
+const TreeCSS = createGlobalStyle`
+  .selected-node-wrapper {
+    background: ${(props: any) => props.theme.colors['list.activeSelectionBackground']};
+    color: ${(props: any) => props.theme.colors['list.activeSelectionForeground']};
+  }
+
+  :not(.selected-node-wrapper).node-wrapper:hover {
+    background: ${(props: any) => props.theme.colors['list.hoverBackground']};
+    color: ${(props: any) => props.theme.colors['list.hoverForeground']};
+    user-select: none;
+  }
+
+  .node-wrapper {
+    user-select: none;
+  }
+`;
 
 export default function FileTree() {
   const { required, handlers } = useTreeState({
@@ -96,17 +112,20 @@ export default function FileTree() {
   }, []);
 
   return (
-    <Tree
-      {...required}
-      {...handlers}
-      classes={{
-        selectedNodeWrapper: 'selected-node-wrapper',
-        nodeWrapper: 'node-wrapper'
-      }}
-      gapMode="padding"
-      disableTransitions={true}
-      depthGap={12}
-      renderNode={renderNode}
-    />
+    <>
+      <TreeCSS />
+      <Tree
+        {...required}
+        {...handlers}
+        classes={{
+          selectedNodeWrapper: 'selected-node-wrapper',
+          nodeWrapper: 'node-wrapper'
+        }}
+        gapMode="padding"
+        disableTransitions={true}
+        depthGap={12}
+        renderNode={renderNode}
+      />
+    </>
   )
 }

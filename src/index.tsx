@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import App from './pages/app/app';
 import * as serviceWorker from './serviceWorker';
-import nightOwl from './themes/night-owl';
 import shadesOfPurple from './themes/shades-of-purple';
 import 'vscode-codicons/dist/codicon.css';
 
@@ -12,25 +11,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     font-family: Inter, Roboto, sans-serif;
-  }
-
-  .selected-node-wrapper {
-    background: ${(props: any) => props.theme.colors['list.activeSelectionBackground']};
-    color: ${(props: any) => props.theme.colors['list.activeSelectionForeground']};
-  }
-
-  :not(.selected-node-wrapper).node-wrapper:hover {
-    background: ${(props: any) => props.theme.colors['list.hoverBackground']};
-    color: ${(props: any) => props.theme.colors['list.hoverForeground']};
-    user-select: none;
-  }
-
-  .node-wrapper {
-    user-select: none;
-  }
-
-  .ReactCollapse--collapse {
-    transition: height 150ms;
   }
 `
 

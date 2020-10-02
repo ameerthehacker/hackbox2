@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import FileTree from './components/file-tree/file-tree';
 import { Collapse } from 'react-collapse';
 
@@ -26,6 +26,7 @@ const SectionHeader = styled.div`
   font-weight: bold;
   padding: 5px;
   padding-left: 0;
+  background: ${props => props.theme.colors['sideBarSectionHeader.background']};
   color: ${props => props.theme.colors['sideBarSectionHeader.foreground']};
   border-bottom: 1px solid ${props => props.theme.colors['contrastBorder']};
   display: flex;
@@ -42,6 +43,12 @@ const SectionHeaderText = styled.div`
 
 const Sections = styled.div`
   margin-top: 5px;
+`;
+
+const CollapseCSS = createGlobalStyle`
+  .ReactCollapse--collapse {
+    transition: height 150ms;
+  }
 `;
 
 type SectionProps = {
@@ -68,16 +75,19 @@ const Section = ({ title, children, defaultOpen }: SectionProps) => {
 
 export default function SideBar() {
   return (
-    <Container>
-      <Header>
-        Explorer
-      </Header>
-      <Sections>
-        <Section title="Open Files" />
-        <Section title="Hackbox">
-          <FileTree />
-        </Section>
-      </Sections>
-    </Container>
+    <>
+      <CollapseCSS />
+      <Container>
+        <Header>
+          Explorer
+        </Header>
+        <Sections>
+          <Section title="Open Files" />
+          <Section title="Hackbox" defaultOpen={true}>
+            <FileTree />
+          </Section>
+        </Sections>
+      </Container>
+    </>
   )
 }
