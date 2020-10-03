@@ -17,24 +17,29 @@ type SidebarItemProps = {
 }
 
 const ActivityBarItem = styled.div<SidebarItemProps>`
-  font-size: 2em !important;
-  padding: 15px 0;
-  width: 100%;
+  width: 60px;
   opacity: ${props => props.isSelected? 1: 0.6};
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
   &:hover {
-    opacity: 1
+    opacity: 1;
   }
   border-left: ${props => props.isSelected? 
   `2px solid ${props.theme.colors['activityBar.foreground']}`: 
   `2px solid ${props.theme.colors['activityBar.background']}`};
+  div {
+    font-size: 2em !important;
+    padding: 15px 0;
+    margin-left: -2px;
+    cursor: pointer;
+  }
 `;
 
-type SidebarProps = {
+type ActivityBarProps = {
   onSidebarItemClicked: (itemName: string | null) => void;
 }
 
-export default function ActivityBar({ onSidebarItemClicked }: SidebarProps) {
+export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) {
   const onClicked = (fn: (name: string | null) => void, name: string) => () => {
     setSelectedItem(name);
 
@@ -50,19 +55,23 @@ export default function ActivityBar({ onSidebarItemClicked }: SidebarProps) {
   return (
     <Container>
       <div>
-        <ActivityBarItem 
+        <ActivityBarItem
           isSelected={selectedItem === 'files'} 
-          className="codicon codicon-files" 
           onClick={onClicked(onSidebarItemClicked, 'files')} 
-        />
+        >
+          <div className="codicon codicon-files"></div>
+        </ActivityBarItem>
         <ActivityBarItem 
           isSelected={selectedItem === 'search'} 
           onClick={onClicked(onSidebarItemClicked, 'search')} 
-          className="codicon codicon-search" 
-        />
+        >
+          <div className="codicon codicon-search"></div>
+        </ActivityBarItem>
       </div>
       <div>
-        <ActivityBarItem className="codicon codicon-gear" />
+        <ActivityBarItem>
+          <div className="codicon codicon-gear"></div>
+        </ActivityBarItem>
       </div>
     </Container>
   )
