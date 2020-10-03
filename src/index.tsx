@@ -16,7 +16,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 (async () => {
-  await loadWASM('https://unpkg.com/onigasm@^2.2.5/lib/onigasm.wasm');
+  // check craco.config.js, we copy this asset from node_modules as there is no other fucking way
+  await loadWASM('/onigasm.wasm');
   
   ReactDOM.render(
     <React.StrictMode>
