@@ -4,32 +4,37 @@ import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { convertTheme } from 'monaco-vscode-textmate-theme-converter/lib/cjs';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
-import jsGrammar from './javascript.tmLanguage.json';
-import cssGrammar from './css.tmLanguage.json';
 import { useTheme } from 'styled-components';
 
 export default function Editor() {
   const theme: any = useTheme();
 
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
+    monacoEditor.languages.register({ id: 'css' });
+    monacoEditor.languages.register({ id: 'html' });
+
     monacoEditor.editor.defineTheme(theme.id, convertTheme(theme));
   }, [theme]);
 
   const onEditorDidMount = useCallback((editor: monaco.editor.ICodeEditor) => {
     const registry = new Registry({
-      getGrammarDefinition: (scopeName) => {
+      getGrammarDefinition: async (scopeName) => {
           switch (scopeName) {
             case 'source.js.jsx': {
-              return Promise.resolve({
+              const grammar = (await import('@vscode/extensions/javascript/syntaxes/JavaScriptReact.tmLanguage.json')).default;
+
+              return {
                 format: 'json',
-                content: JSON.stringify(jsGrammar)
-              });
+                content: grammar
+              };
             }
             case 'source.css': {
-              return Promise.resolve({
+              const grammar = (await import('@vscode/extensions/css/syntaxes/css.tmLanguage.json')).default;
+
+              return {
                 format: 'json',
-                content: JSON.stringify(cssGrammar)
-              });
+                content: grammar
+              };
             }
             default: {
               return Promise.resolve({

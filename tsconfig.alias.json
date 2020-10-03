@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@vscode/*": ["vscode/*"],
+      "@src/*": ["src/*"]
+    }
+  }
+}
