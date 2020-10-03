@@ -5,7 +5,7 @@ module.exports = {
     alias: {},
     plugins: [
       new MonacoWebpackPlugin({
-        languages: ['javascript', 'json', 'typescript', 'css', 'html']
+        languages: ['javascript', 'typescript']
       })
     ],
     configure: (webpackConfig => {
