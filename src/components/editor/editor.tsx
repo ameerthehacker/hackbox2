@@ -104,7 +104,7 @@ export default function App() {
       <MonacoEditor
         theme={theme.id}
         width="100%"
-        height="calc(100% - 65px)" 
+        height="calc(100% - 67px)" 
         value={code}
         options={{
           minimap: {
