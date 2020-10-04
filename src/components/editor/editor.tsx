@@ -5,6 +5,7 @@ import { convertTheme } from 'monaco-vscode-textmate-theme-converter/lib/cjs';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import { useTheme } from 'styled-components';
+import Tabs from './components/tabs/tabs';
 
 export default function Editor() {
   const theme: any = useTheme();
@@ -90,19 +91,24 @@ export default function App() {
 }
 `;
 
-  return <MonacoEditor
-          theme={theme.id}
-          width="100%"
-          height="100%" 
-          value={code}
-          options={{
-            minimap: {
-              enabled: false
-            },
-            scrollBeyondLastLine: false
-          }}
-          editorWillMount={onEditorWillMount}
-          editorDidMount={onEditorDidMount}
-          language="javascript"
-        />;
+  return (
+    <div style={{ width: "100%" }}>
+      <Tabs />
+      <MonacoEditor
+        theme={theme.id}
+        width="100%"
+        height="calc(100% - 40px)" 
+        value={code}
+        options={{
+          minimap: {
+            enabled: false
+          },
+          scrollBeyondLastLine: false
+        }}
+        editorWillMount={onEditorWillMount}
+        editorDidMount={onEditorDidMount}
+        language="javascript"
+      />
+    </div>
+  )
 }

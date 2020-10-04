@@ -80,6 +80,7 @@ export default function FileTree() {
   const { required, handlers } = useTreeState({
     data: files,
     id: 'files',
+    defaultOpened: true
   });
   
   const renderNode = useCallback(({ node, onToggle }: DefaultNodeProps) => {
