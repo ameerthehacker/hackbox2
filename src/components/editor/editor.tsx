@@ -6,6 +6,7 @@ import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import { useTheme } from 'styled-components';
 import Tabs from './components/tabs/tabs';
+import Breadcrumbs from './components/breadcrumbs/breadcrumbs';
 
 export default function Editor() {
   const theme: any = useTheme();
@@ -94,10 +95,16 @@ export default function App() {
   return (
     <div style={{ width: "100%" }}>
       <Tabs />
+      <Breadcrumbs>
+        <div>src</div>
+        <div>components</div>
+        <div>navbar</div>
+        <div>navbar.js</div>
+      </Breadcrumbs>
       <MonacoEditor
         theme={theme.id}
         width="100%"
-        height="calc(100% - 40px)" 
+        height="calc(100% - 65px)" 
         value={code}
         options={{
           minimap: {

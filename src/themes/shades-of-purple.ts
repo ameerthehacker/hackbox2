@@ -258,7 +258,7 @@ export default {
 		"welcomePage.buttonHoverBackground": "#262650",
 		"widget.shadow": "#00000026",
 		//"activityBar.dropBorder": "#ffffff",
-		//"breadcrumb.background": "#2d2b55",
+		"breadcrumb.background": "#2d2b55",
 		//"button.secondaryBackground": "#3a3d41",
 		//"button.secondaryForeground": "#ffffff",
 		//"button.secondaryHoverBackground": "#45494e",

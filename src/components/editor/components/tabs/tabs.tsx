@@ -20,8 +20,11 @@ const TabContainer = styled.div<TabProps>`
   align-items: center;
   height: 100%;
   padding: 0px 20px;
+  color: ${props => props.isSelected? props.theme.colors['tab.activeForeground']: props.theme.colors['tab.inactiveForeground']};
   background: ${props => props.isSelected? props.theme.colors['tab.activeBackground']: 'none'};
   border-right: 1px solid ${props => props.theme.colors['tab.border']};
+  border-bottom: 1px solid ${props => props.isSelected? props.theme.colors['tab.activeBorder']: 'none'};
+  cursor: pointer;
 `;
 
 const CloseButton = styled.div`
