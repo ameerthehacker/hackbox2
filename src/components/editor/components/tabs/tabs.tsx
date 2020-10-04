@@ -40,10 +40,10 @@ const Tab = ({ isSelected, children }: TabProps) => {
 export default function Tabs() {
   return (
     <Container>
-      <Tab isSelected={true}>
+      <Tab>
         index.js
       </Tab>
-      <Tab>
+      <Tab isSelected={true}>
         navbar.js
       </Tab>
     </Container>
