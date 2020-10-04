@@ -99,9 +99,10 @@ export default function App() {
             minimap: {
               enabled: false
             },
+            scrollBeyondLastLine: false
           }}
           editorWillMount={onEditorWillMount}
           editorDidMount={onEditorDidMount}
-          language="javascript" 
+          language="javascript"
         />;
 }

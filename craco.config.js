@@ -6,7 +6,8 @@ module.exports = {
   webpack: {
     alias: {
       '@vscode': path.resolve(__dirname, 'vscode'),
-      '@src': path.resolve(__dirname, 'src')
+      '@src': path.resolve(__dirname, 'src'),
+      'vs': path.resolve(__dirname, 'vscode', 'src', 'vs')
     },
     plugins: [
       new MonacoWebpackPlugin({
@@ -26,6 +27,8 @@ module.exports = {
       const scopePluginIndex = webpackConfig.resolve.plugins.findIndex(
         ({ constructor }) => constructor && constructor.name === 'ModuleScopePlugin'
       );
+
+      const babelLoader = webpackConfig.resolve.m
 
       // remove scope plugin
       webpackConfig.resolve.plugins.splice(scopePluginIndex, 1);
