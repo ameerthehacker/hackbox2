@@ -26,16 +26,22 @@ const BreadcrumbContainer = styled.div`
 `;
 
 export default function Breadcrumbs({ children }: BreadcrumbsProps) {
+  const childrenCount = Children.count(children);
+
   return (
     <Container>
       {
-        Children.map(children, child => {
+        Children.map(children, (child, index) => {
           return (
             <BreadcrumbContainer>
               <div>
                 {child}
               </div>
-              <div className="codicon codicon-chevron-right" />
+              {
+                childrenCount - 1 !== index && (
+                  <div className="codicon codicon-chevron-right" />
+                )
+              }
             </BreadcrumbContainer>
           )
         })
