@@ -67,6 +67,12 @@ export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) 
         >
           <div className="codicon codicon-search" />
         </ActivityBarItem>
+        <ActivityBarItem 
+          isSelected={selectedItem === 'extensions'} 
+          onClick={onClicked(onSidebarItemClicked, 'extensions')} 
+        >
+          <div className="codicon codicon-extensions" />
+        </ActivityBarItem>
       </div>
       <div>
         <ActivityBarItem>
