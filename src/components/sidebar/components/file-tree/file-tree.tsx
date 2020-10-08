@@ -1,47 +1,8 @@
 import React, { useCallback } from 'react';
 import Tree, { DefaultNodeProps, treeHandlers, useTreeState } from 'react-hyper-tree';
 import styled, { createGlobalStyle } from 'styled-components';
-import { ReactComponent as FolderCloseIcon } from './folder-close.svg';
-import { ReactComponent as FolderOpenIcon } from './folder-open.svg';
-import { ReactComponent as JavaScriptIcon } from './javascript.svg';
-
-const files = {
-  id: 1,
-  name: 'src',
-  isDir: true,
-  children: [
-    {
-      id: 2,
-      name: 'components',
-      isDir: true,
-      children: [
-        {
-          id: 8,
-          name: 'navbar',
-          isDir: true,
-          children: [
-            {
-              id: 9,
-              name: 'navbar.js'
-            }
-          ]
-        },
-        {
-          id: 5,
-          name: 'app.js',
-        },
-        {
-          id: 6,
-          name: 'auth.js',
-        },
-        {
-          id: 7,
-          name: 'index.js',
-        },
-      ],
-    },
-  ],
-};
+import { FILES } from './files';
+import { getIconForFile, getIconForFolder, getIconForOpenFolder } from 'vscode-material-icon-theme-js';
 
 const NodeContainer = styled.div`
   display: flex;
@@ -78,7 +39,7 @@ const TreeCSS = createGlobalStyle`
 
 export default function FileTree() {
   const { required, handlers } = useTreeState({
-    data: files,
+    data: FILES,
     id: 'files',
     defaultOpened: true
   });
@@ -97,14 +58,22 @@ export default function FileTree() {
           <>
             <div className={`codicon codicon-chevron-${node.isOpened()? 'down': 'right'}`}></div>
             <IconContainer>
-              {!node.isOpened() && <FolderCloseIcon />}
-              {node.isOpened() && <FolderOpenIcon />}
+              {!node.isOpened() && (
+                <img style={{ height: "20px" }} alt="" src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFolder(node.data.name)}`} />
+              )}
+              {node.isOpened() && (
+                <img style={{ height: "20px" }} alt="" src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForOpenFolder(node.data.name)}`} />
+              )}
             </IconContainer>
           </>
         )}
         {!node.data.isDir && (
           <IconContainer isFile={true}>
-            <JavaScriptIcon style={{ height: "18px" }} />
+            <img
+              alt=""
+              style={{ height: "18px" }}
+              src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile(node.data.name)}`}
+            />
           </IconContainer>
         )} 
         <NameContainer>{node.data.name}</NameContainer>
