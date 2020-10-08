@@ -71,7 +71,7 @@ const Section = ({ title, children, defaultOpen }: SectionProps) => {
   return (
     <div>
       <SectionHeader onClick={() => setIsOpen(isOpen => !isOpen)}>
-        <div className={`codicon codicon-chevron-${isOpen? 'down': 'right'}`}></div>
+        <div style={{ marginLeft: "5px" }} className={`codicon codicon-chevron-${isOpen? 'down': 'right'}`}></div>
         <SectionHeaderText>{title}</SectionHeaderText>
       </SectionHeader>
       <SectionContent isOpened={isOpen || false}>
