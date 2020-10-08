@@ -25,12 +25,12 @@ const ActivityBarItem = styled.div<SidebarItemProps>`
     opacity: 1;
   }
   border-left: ${props => props.isSelected? 
-  `2px solid ${props.theme.colors['activityBar.foreground']}`: 
-  `2px solid ${props.theme.colors['activityBar.background']}`};
+  `3px solid ${props.theme.colors['activityBar.activeBorder']}`: 
+  `3px solid ${props.theme.colors['activityBar.background']}`};
   div {
     font-size: 2em !important;
     padding: 15px 0;
-    margin-left: -2px;
+    margin-left: -3px;
     cursor: pointer;
   }
 `;
