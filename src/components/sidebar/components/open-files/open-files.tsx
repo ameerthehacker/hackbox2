@@ -1,5 +1,5 @@
 import React, { Children, ReactNode, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
@@ -38,7 +38,7 @@ export default function OpenFiles({ children }: OpenFileProps) {
   return (
     <Container>
       {Children.map(children, (child, index) => (
-        <OpenFile isSelected={selectedIndex === index} key={index}>
+        <OpenFile isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
           <OpenFileContainer>
             <div className="codicon codicon-close" style={{ visibility: selectedIndex === index? 'visible': 'hidden' }} />
             <div style={{ marginLeft: "5px" }}>
