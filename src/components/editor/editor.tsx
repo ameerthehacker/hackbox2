@@ -14,6 +14,8 @@ export default function Editor() {
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
     monacoEditor.languages.register({ id: 'html' });
+    monacoEditor.languages.register({ id: 'javascript' });
+    monacoEditor.languages.register({ id: 'typescript' });
 
     monacoEditor.editor.defineTheme(theme.id, convertTheme(theme));
   }, [theme]);
@@ -57,9 +59,7 @@ export default function Editor() {
       return (editor as any)._themeService._theme;
     }
 
-    monaco.languages.typescript.getJavaScriptWorker().then(() => {
-      wireTmGrammars(monaco, registry, grammars, editor);
-    });
+    wireTmGrammars(monaco, registry, grammars, editor);
   }, []);
 
   const code = `import React from 'react';

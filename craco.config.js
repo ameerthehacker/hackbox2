@@ -11,7 +11,7 @@ module.exports = {
     },
     plugins: [
       new MonacoWebpackPlugin({
-        languages: ['javascript', 'typescript']
+        languages: []
       }),
       new CopyPlugin({
         patterns: [
@@ -32,15 +32,6 @@ module.exports = {
 
       // remove scope plugin
       webpackConfig.resolve.plugins.splice(scopePluginIndex, 1);
-
-      webpackConfig.module.rules = [
-        {
-          test: /\.wasm$/,
-          loader: "file-loader",
-          type: "javascript/auto"
-        },
-        ...webpackConfig.module.rules
-      ];
 
       return webpackConfig;
     })
