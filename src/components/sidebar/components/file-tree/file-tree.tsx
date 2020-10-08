@@ -9,6 +9,7 @@ const NodeContainer = styled.div`
   padding: 4px;
   padding-left: 16px;
   align-items: flex-baseline;
+  user-select: none;
 `;
 
 const NameContainer = styled.div`
@@ -29,11 +30,6 @@ const TreeCSS = createGlobalStyle`
   :not(.selected-node-wrapper).node-wrapper:hover {
     background: ${(props: any) => props.theme.colors['list.hoverBackground']};
     color: ${(props: any) => props.theme.colors['list.hoverForeground']};
-    user-select: none;
-  }
-
-  .node-wrapper {
-    user-select: none;
   }
 `;
 

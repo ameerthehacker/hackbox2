@@ -17,7 +17,7 @@ export const FILES = [
     children: [
       {
         id: 2,
-        name: 'index.js'
+        name: 'index.tsx'
       },
       {
         id: 3,

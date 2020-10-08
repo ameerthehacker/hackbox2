@@ -100,9 +100,7 @@ export default function App() {
       </Tabs>
       <Breadcrumbs>
         <div>src</div>
-        <div>components</div>
-        <div>navbar</div>
-        <div>navbar.js</div>
+        <div>index.tsx</div>
       </Breadcrumbs>
       <MonacoEditor
         theme={theme.id}

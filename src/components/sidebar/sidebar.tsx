@@ -2,6 +2,8 @@ import React, { ReactNode, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import FileTree from './components/file-tree/file-tree';
 import { Collapse } from 'react-collapse';
+import OpenFiles from './components/open-files/open-files';
+import { getIconForFile } from 'vscode-material-icon-theme-js';
 
 const Container = styled.div`
   height: 100%;
@@ -51,6 +53,12 @@ const CollapseCSS = createGlobalStyle`
   }
 `;
 
+const OpenFile = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`;
+
 type SectionProps = {
   title: string;
   children?: ReactNode;
@@ -82,7 +90,34 @@ export default function SideBar() {
           Explorer
         </Header>
         <Sections>
-          <Section title="Open Files" />
+          <Section title="Open Files" defaultOpen={true}>
+            <OpenFiles>
+              <OpenFile>
+                <img 
+                  alt=""
+                  style={{ height: "18px" }}
+                  src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile('index.tsx')}`}
+                />
+                <div style={{ marginLeft: "5px" }}>index.tsx</div>
+              </OpenFile>
+              <OpenFile>
+                <img 
+                  alt=""
+                  style={{ height: "18px" }}
+                  src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile('index.html')}`}
+                />
+                <div style={{ marginLeft: "5px" }}>index.html</div>
+              </OpenFile>
+              <OpenFile>
+                <img 
+                  alt=""
+                  style={{ height: "18px" }}
+                  src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile('index.css')}`}
+                />
+                <div style={{ marginLeft: "5px" }}>index.css</div>
+              </OpenFile>
+            </OpenFiles>
+          </Section>
           <Section title="Hackbox" defaultOpen={true}>
             <FileTree />
           </Section>

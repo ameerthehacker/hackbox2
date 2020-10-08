@@ -27,7 +27,7 @@ export default function Statusbar() {
     <Container>
       <Content>
         <div>JavaScript</div>
-        <div className="codicon codicon-bell-dot"></div>
+        <div className="codicon codicon-bell-dot" />
       </Content>
     </Container>
   );

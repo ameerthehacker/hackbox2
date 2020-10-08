@@ -59,18 +59,18 @@ export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) 
           isSelected={selectedItem === 'files'} 
           onClick={onClicked(onSidebarItemClicked, 'files')} 
         >
-          <div className="codicon codicon-files"></div>
+          <div className="codicon codicon-files" />
         </ActivityBarItem>
         <ActivityBarItem 
           isSelected={selectedItem === 'search'} 
           onClick={onClicked(onSidebarItemClicked, 'search')} 
         >
-          <div className="codicon codicon-search"></div>
+          <div className="codicon codicon-search" />
         </ActivityBarItem>
       </div>
       <div>
         <ActivityBarItem>
-          <div className="codicon codicon-gear"></div>
+          <div className="codicon codicon-gear" />
         </ActivityBarItem>
       </div>
     </Container>
