@@ -94,7 +94,10 @@ export default function App() {
 
   return (
     <div style={{ width: "100%" }}>
-      <Tabs />
+      <Tabs>
+        <div>index.js</div>
+        <div>index.html</div>
+      </Tabs>
       <Breadcrumbs>
         <div>src</div>
         <div>components</div>

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, Children, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -13,6 +13,7 @@ const Container = styled.div`
 type TabProps = {
   isSelected?: boolean;
   children?: ReactNode;
+  onClick: () => void;
 }
 
 const TabContainer = styled.div<TabProps>`
@@ -31,24 +32,31 @@ const CloseButton = styled.div`
   margin-left: 10px;
 `;
 
-const Tab = ({ isSelected, children }: TabProps) => {
+const Tab = ({ isSelected, children, onClick }: TabProps) => {
   return (
-    <TabContainer isSelected={isSelected}>
+    <TabContainer isSelected={isSelected} onClick={onClick}>
       {children}
       <CloseButton className="codicon codicon-close" />
     </TabContainer>
   )
 }
 
-export default function Tabs() {
+type TabsProps = {
+  children: ReactNode;
+}
+
+export default function Tabs({ children }: TabsProps) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <Container>
-      <Tab>
-        index.js
-      </Tab>
-      <Tab isSelected={true}>
-        navbar.js
-      </Tab>
+      {
+        Children.map(children, (child, index) => (
+          <Tab isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
+            {child}
+          </Tab>
+        ))
+      }
     </Container>
   )
 }
