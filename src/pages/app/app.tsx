@@ -22,12 +22,12 @@ export default function App() {
   const setSelectedFile = useStore(state => state.setSelectedFile);
 
   useEffect(() => {
-    setOpenFiles(['src/index.tsx', 'src/index.css', 'src/index.html']);
+    setOpenFiles(['src/index.tsx', 'src/index.css', 'public/index.html', 'package.json']);
     setSelectedFile('src/index.tsx');
     loadWASM('/onigasm.wasm').finally(() => {
       setOnigasmLoaded();
     });
-  }, [setOnigasmLoaded, setOpenFiles]);
+  }, [setOnigasmLoaded, setOpenFiles, setSelectedFile]);
 
   return (
     <Container>

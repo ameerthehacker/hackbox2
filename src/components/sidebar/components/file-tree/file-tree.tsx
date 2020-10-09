@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Tree, { DefaultNodeProps, treeHandlers, useTreeState } from 'react-hyper-tree';
 import styled, { createGlobalStyle } from 'styled-components';
-import { FILES } from './files';
-import { getIconForFile, getIconForFolder, getIconForOpenFolder } from 'vscode-material-icon-theme-js';
+import { FILES } from '@src/templates/react';
+import { convertFilesToTree, getBasename } from '@src/utils/utils';
+import Icon from '@src/components/icon/icon';
+import { useStore } from '@src/store';
 
 const NodeContainer = styled.div`
   display: flex;
@@ -14,7 +16,6 @@ const NodeContainer = styled.div`
 
 const NameContainer = styled.div`
   margin-left: 5px;
-  cursor: pointer;
 `;
 
 const IconContainer = styled.div<{ isFile?: boolean }>`
@@ -34,52 +35,71 @@ const TreeCSS = createGlobalStyle`
 
   .node-wrapper {
     user-select: none;
+    cursor: pointer;
   }
 `;
 
 export default function FileTree() {
   const { required, handlers } = useTreeState({
-    data: FILES,
-    id: 'files',
+    data: convertFilesToTree(FILES),
+    id: '/',
     defaultOpened: true
   });
+  const setSelectedFile = useStore(state => state.setSelectedFile);
+  const selectedFile = useStore(state => state.selectedFile);
+  const tree = treeHandlers.trees['/'];
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    const node = tree.instance.getNodeById(selectedFile);
+
+    if (node) {
+      tree.handlers.setSelected(node, true);
+
+      // open all parents of the node
+      let parent = node.getParent();
+
+      while(parent) {
+        parent.setOpened(true);
+
+        parent = parent.getParent();
+      }
+    }
+  }, [selectedFile])
   
   const renderNode = useCallback(({ node, onToggle }: DefaultNodeProps) => {
+    const entityName = getBasename(node.data.path);
+
     return (
       <NodeContainer onClick={(evt) => {
         onToggle(evt);
 
-        treeHandlers.trees.files.handlers.setSelected(
+        tree.handlers.setSelected(
           node,
           true
         );
+        
+        if (!node.data.isDir) {
+          setSelectedFile(node.data.path);
+        }
       }}>
         {node.data.isDir && (
           <>
             <div className={`codicon codicon-chevron-${node.isOpened()? 'down': 'right'}`}></div>
             <IconContainer>
-              {!node.isOpened() && (
-                <img style={{ height: "20px" }} alt="" src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFolder(node.data.name)}`} />
-              )}
-              {node.isOpened() && (
-                <img style={{ height: "20px" }} alt="" src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForOpenFolder(node.data.name)}`} />
-              )}
+              <Icon entityName={entityName} isDir={true} isDirOpen={node.isOpened()} />
             </IconContainer>
           </>
         )}
         {!node.data.isDir && (
           <IconContainer isFile={true}>
-            <img
-              alt=""
-              style={{ height: "18px" }}
-              src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile(node.data.name)}`}
-            />
+            <Icon entityName={entityName} />
           </IconContainer>
         )} 
-        <NameContainer>{node.data.name}</NameContainer>
+        <NameContainer>{entityName}</NameContainer>
       </NodeContainer>
     );
-  }, []);
+  }, [setSelectedFile]);
 
   return (
     <>

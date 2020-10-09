@@ -20,3 +20,40 @@ export function getFolderIcon(filename: string) {
 export function getOpenFolderIcon(filename: string) {
   return `${vscodeMaterialIcons}/${getIconForOpenFolder(filename)}`;
 }
+
+/* eslint-disable no-loop-func */
+export function convertFilesToTree(files: Record<string, string>) {
+  let tree: any = [];
+
+  for (const file in files) {
+    const fileParts = file.split('/');
+    let currentRoot = tree;
+
+    fileParts.forEach((filePart, index) => {
+      const currentPath = fileParts.slice(0, index + 1).join('/');
+      const node = currentRoot.find((node: any) => node.path === currentPath);
+
+      if (!node) {
+        const isDir = index !== fileParts.length - 1;
+        const newNode = {
+          id: currentPath,
+          path: currentPath,
+          isDir,
+          children: []
+        };
+
+        currentRoot.push(newNode);
+
+        currentRoot = newNode.children;
+      } else {
+        if (!node.children) {
+          node.children = [];
+        }
+
+        currentRoot = node.children;
+      }
+    });
+  }
+
+  return tree;
+}

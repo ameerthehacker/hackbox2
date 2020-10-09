@@ -1,7 +1,7 @@
 import Icon from '@src/components/icon/icon';
 import { useStore } from '@src/store';
 import { getBasename } from '@src/utils/utils';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
