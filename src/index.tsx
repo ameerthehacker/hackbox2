@@ -5,7 +5,6 @@ import App from './pages/app/app';
 import * as serviceWorker from './serviceWorker';
 import shadesOfPurple from './themes/shades-of-purple';
 import 'vscode-codicons/dist/codicon.css';
-import { loadWASM } from 'onigasm';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,20 +14,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-(async () => {
-  // check craco.config.js, we copy this asset from node_modules as there is no other fucking way
-  await loadWASM('/onigasm.wasm');
-  
-  ReactDOM.render(
-    <React.StrictMode>
-      <ThemeProvider theme={shadesOfPurple}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
-})()
+ReactDOM.render(
+  <React.StrictMode>
+    <ThemeProvider theme={shadesOfPurple}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

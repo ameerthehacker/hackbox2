@@ -7,9 +7,12 @@ import { wireTmGrammars } from 'monaco-editor-textmate';
 import { useTheme } from 'styled-components';
 import Tabs from './components/tabs/tabs';
 import Breadcrumbs from './components/breadcrumbs/breadcrumbs';
+import { useStore } from '@src/store';
+import EmptyState from './components/empty-state/empty-state';
 
 export default function Editor() {
   const theme: any = useTheme();
+  const isOnigasmLoaded = useStore(state => state.isOnigasmLoaded);
 
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
@@ -94,23 +97,28 @@ export default function App() {
 
   return (
     <div style={{ width: "100%" }}>
-      <Tabs filePaths={['src/index.tsx', 'src/index.html']} />       
-      <Breadcrumbs filePath="src/index.tsx" />
-      <MonacoEditor
-        theme={theme.id}
-        width="100%"
-        height="calc(100% - 67px)" 
-        value={code}
-        options={{
-          minimap: {
-            enabled: false
-          },
-          scrollBeyondLastLine: false
-        }}
-        editorWillMount={onEditorWillMount}
-        editorDidMount={onEditorDidMount}
-        language="javascript"
-      />
+      {
+        isOnigasmLoaded? (
+          <>
+            <Tabs filePaths={['src/index.tsx', 'src/index.html']} />       
+            <Breadcrumbs filePath="src/index.tsx" />
+            <MonacoEditor
+              theme={theme.id}
+              height="calc(100% - 67px)" 
+              value={code}
+              options={{
+                minimap: {
+                  enabled: false
+                },
+                scrollBeyondLastLine: false
+              }}
+              editorWillMount={onEditorWillMount}
+              editorDidMount={onEditorDidMount}
+              language="javascript"
+            />
+          </>
+        ): <EmptyState />
+      }
     </div>
   )
 }

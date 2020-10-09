@@ -37,7 +37,7 @@ export default function Breadcrumbs({ filePath }: BreadcrumbsProps) {
             const isFileName = fileParts.length - 1 === index;
 
             return (
-              <BreadcrumbContainer>
+              <BreadcrumbContainer key={index}>
                 {
                   isFileName && (
                     <Icon entityName={filePart} />
