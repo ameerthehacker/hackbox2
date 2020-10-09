@@ -28,8 +28,6 @@ module.exports = {
         ({ constructor }) => constructor && constructor.name === 'ModuleScopePlugin'
       );
 
-      const babelLoader = webpackConfig.resolve.m
-
       // remove scope plugin
       webpackConfig.resolve.plugins.splice(scopePluginIndex, 1);
 

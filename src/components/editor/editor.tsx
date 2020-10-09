@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { convertTheme } from 'monaco-vscode-textmate-theme-converter/lib/cjs';
@@ -15,14 +15,29 @@ export default function Editor() {
   const isOnigasmLoaded = useStore(state => state.isOnigasmLoaded);
   const selectedFile = useStore(state => state.selectedFile);
   const openFiles = useStore(state => state.openFiles);
+  const monacoEditorRef = useRef<MonacoEditor|null>();
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
     monacoEditor.languages.register({ id: 'html' });
     monacoEditor.languages.register({ id: 'javascript' });
     monacoEditor.languages.register({ id: 'typescript' });
+    monacoEditor.languages.register({ id: 'json' });
 
     monacoEditor.editor.defineTheme(theme.id, convertTheme(theme));
   }, [theme]);
+  const loadEditorModel = (selectedFile: string) => {
+    if (monacoEditorRef.current && selectedFile) {
+      const editorModel = monaco.editor.getModels().find(model => model.uri.path === `/${selectedFile}`);
+
+      if (editorModel) {
+        monacoEditorRef.current.editor?.setModel(editorModel);
+      }
+    }
+  }
+
+  useEffect(() => {
+    loadEditorModel(selectedFile);
+  }, [selectedFile])
 
   const onEditorDidMount = useCallback((editor: monaco.editor.ICodeEditor) => {
     const registry = new Registry({
@@ -44,6 +59,22 @@ export default function Editor() {
                 content: grammar
               };
             }
+            case 'source.html': {
+              const grammar = (await import('@vscode/extensions/html/syntaxes/html.tmLanguage.json')).default;
+
+              return {
+                format: 'json',
+                content: grammar
+              };
+            }
+            case 'source.json': {
+              const grammar = (await import('@vscode/extensions/json/syntaxes/JSON.tmLanguage.json')).default;
+
+              return {
+                format: 'json',
+                content: grammar
+              };
+            }
             default: {
               return Promise.resolve({
                 format: 'json',
@@ -58,6 +89,8 @@ export default function Editor() {
     // all supported themed languages
     grammars.set('javascript', 'source.js.jsx');
     grammars.set('css', 'source.css');
+    grammars.set('html', 'source.html');
+    grammars.set('json', 'source.json');
 
     (editor as any)._themeService.getTheme = () => {
       return (editor as any)._themeService._theme;
@@ -65,36 +98,6 @@ export default function Editor() {
 
     wireTmGrammars(monaco, registry, grammars, editor);
   }, []);
-
-  const code = `import React from 'react';
-import styled from 'styled-components';
-import SideBar from '../../components/sidebar/sidebar';
-import ActivityBar from '../../components/activity-bar/activity-bar';
-import Statusbar from '../../components/statusbar/statusbar';
-import Editor from '../../components/editor/editor';
-
-const Container = styled.div\`
-  height: 100vh;
-\`;
-
-const Workspace = styled.div\`
-  display: flex;
-  height: calc(100vh - 26px);
-\`;
-
-export default function App() {
-  return (
-    <Container>
-      <Workspace>
-        <ActivityBar onSidebarItemClicked={name => console.log(name)} />
-        <SideBar />
-        <Editor />
-      </Workspace>
-      <Statusbar />
-    </Container>
-  );
-}
-`;
 
   return (
     <div style={{ width: "100%" }}>
@@ -104,9 +107,13 @@ export default function App() {
             <Tabs filePaths={openFiles} />       
             <Breadcrumbs filePath={selectedFile} />
             <MonacoEditor
+              ref={(ref) => {
+                monacoEditorRef.current = ref;
+
+                loadEditorModel(selectedFile);
+              }}
               theme={theme.id}
               height="calc(100% - 67px)" 
-              value={code}
               options={{
                 minimap: {
                   enabled: false
