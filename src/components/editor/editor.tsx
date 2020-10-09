@@ -95,10 +95,7 @@ export default function App() {
   return (
     <div style={{ width: "100%" }}>
       <Tabs filePaths={['src/index.tsx', 'src/index.html']} />       
-      <Breadcrumbs>
-        <div>src</div>
-        <div>index.tsx</div>
-      </Breadcrumbs>
+      <Breadcrumbs filePath="src/index.tsx" />
       <MonacoEditor
         theme={theme.id}
         width="100%"

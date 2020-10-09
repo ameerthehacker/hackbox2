@@ -1,4 +1,5 @@
-import React, { Children, ReactNode } from 'react';
+import Icon from '@src/components/icon/icon';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -13,7 +14,7 @@ const Container = styled.div`
 `;
 
 type BreadcrumbsProps = {
-  children: ReactNode;
+  filePath?: string;
 }
 
 const BreadcrumbContainer = styled.div`
@@ -25,27 +26,36 @@ const BreadcrumbContainer = styled.div`
   }
 `;
 
-export default function Breadcrumbs({ children }: BreadcrumbsProps) {
-  const childrenCount = Children.count(children);
+export default function Breadcrumbs({ filePath }: BreadcrumbsProps) {
+  const fileParts = filePath?.split('/');
 
   return (
-    <Container>
+    fileParts && fileParts.length > 0 ? (
+      <Container>
       {
-        Children.map(children, (child, index) => {
-          return (
-            <BreadcrumbContainer>
-              <div>
-                {child}
-              </div>
-              {
-                childrenCount - 1 !== index && (
-                  <div className="codicon codicon-chevron-right" />
-                )
-              }
-            </BreadcrumbContainer>
-          )
-        })
-      }
-    </Container>
-  )
+          fileParts.map((filePart, index) => {
+            const isFileName = fileParts.length - 1 === index;
+
+            return (
+              <BreadcrumbContainer>
+                {
+                  isFileName && (
+                    <Icon entityName={filePart} />
+                  )
+                }
+                <div style={{ marginLeft: isFileName? "5px": 0 }}>
+                  {filePart}
+                </div>
+                {
+                  !isFileName && (
+                    <div className="codicon codicon-chevron-right" />
+                  )
+                }
+              </BreadcrumbContainer>
+            )
+          })
+        }
+      </Container>
+    ): null
+  );
 }
