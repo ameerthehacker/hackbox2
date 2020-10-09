@@ -13,7 +13,8 @@ import EmptyState from './components/empty-state/empty-state';
 export default function Editor() {
   const theme: any = useTheme();
   const isOnigasmLoaded = useStore(state => state.isOnigasmLoaded);
-
+  const selectedFile = useStore(state => state.selectedFile);
+  const openFiles = useStore(state => state.openFiles);
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
     monacoEditor.languages.register({ id: 'html' });
@@ -100,8 +101,8 @@ export default function App() {
       {
         isOnigasmLoaded? (
           <>
-            <Tabs filePaths={['src/index.tsx', 'src/index.html']} />       
-            <Breadcrumbs filePath="src/index.tsx" />
+            <Tabs filePaths={openFiles} />       
+            <Breadcrumbs filePath={selectedFile} />
             <MonacoEditor
               theme={theme.id}
               height="calc(100% - 67px)" 

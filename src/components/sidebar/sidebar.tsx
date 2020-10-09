@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import FileTree from './components/file-tree/file-tree';
 import { Collapse } from 'react-collapse';
 import OpenFiles from './components/open-files/open-files';
+import { useStore } from '@src/store';
 
 const Container = styled.div`
   height: 100%;
@@ -75,6 +76,8 @@ const Section = ({ title, children, defaultOpen }: SectionProps) => {
 }
 
 export default function SideBar() {
+  const openFiles = useStore(state => state.openFiles);
+
   return (
     <>
       <CollapseCSS />
@@ -85,11 +88,7 @@ export default function SideBar() {
         <Sections>
           <Section title="Open Editors" defaultOpen={true}>
             <OpenFiles
-              filePaths={[
-                'src/index.tsx',
-                'src/index.css',
-                'src/index.html'
-              ]}
+              filePaths={openFiles}
             /> 
           </Section>
           <Section title="Hackbox" defaultOpen={true}>

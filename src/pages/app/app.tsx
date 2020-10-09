@@ -18,12 +18,16 @@ const Workspace = styled.div`
 
 export default function App() {
   const setOnigasmLoaded = useStore(state => state.setOnigasmLoaded);
+  const setOpenFiles = useStore(state => state.setOpenFiles);
+  const setSelectedFile = useStore(state => state.setSelectedFile);
 
   useEffect(() => {
+    setOpenFiles(['src/index.tsx', 'src/index.css', 'src/index.html']);
+    setSelectedFile('src/index.tsx');
     loadWASM('/onigasm.wasm').finally(() => {
       setOnigasmLoaded();
     });
-  }, [setOnigasmLoaded]);
+  }, [setOnigasmLoaded, setOpenFiles]);
 
   return (
     <Container>

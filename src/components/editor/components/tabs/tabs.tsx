@@ -1,4 +1,5 @@
 import Icon from '@src/components/icon/icon';
+import { useStore } from '@src/store';
 import { getBasename } from '@src/utils/utils';
 import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
@@ -54,7 +55,8 @@ type TabsProps = {
 }
 
 export default function Tabs({ filePaths = [] }: TabsProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const setSelecetedFile = useStore(state => state.setSelectedFile);
+  const selectedFile = useStore(state => state.selectedFile);
 
   return (
     <Container>
@@ -63,7 +65,7 @@ export default function Tabs({ filePaths = [] }: TabsProps) {
           const filename = getBasename(filePath);
 
           return (
-            <Tab isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
+            <Tab isSelected={filePath === selectedFile} key={index} onClick={() => setSelecetedFile(filePath)}>
               <FileNameContainer>
                 <Icon entityName={filename} />
                 <div style={{ marginLeft: "5px" }}>

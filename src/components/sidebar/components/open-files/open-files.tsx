@@ -1,6 +1,7 @@
 import Icon from '@src/components/icon/icon';
+import { useStore } from '@src/store';
 import { getBasename } from '@src/utils/utils';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -41,7 +42,8 @@ const FileNameContainer = styled.div`
 `;
 
 export default function OpenFiles({ filePaths = [] }: OpenFileProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const setSelecetedFile = useStore(state => state.setSelectedFile);
+  const selectedFile = useStore(state => state.selectedFile);
 
   return (
     <Container>
@@ -49,9 +51,9 @@ export default function OpenFiles({ filePaths = [] }: OpenFileProps) {
         const filename = getBasename(filePath);
 
         return (
-          <OpenFile isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
+          <OpenFile isSelected={filePath === selectedFile} key={index} onClick={() => setSelecetedFile(filePath)}>
             <OpenFileContainer>
-              <div className="codicon codicon-close" style={{ visibility: selectedIndex === index? 'visible': 'hidden' }} />
+              <div className="codicon codicon-close" style={{ visibility: filePath === selectedFile? 'visible': 'hidden' }} />
               <FileNameContainer>
                 <Icon entityName={filename} />
                 <div style={{ marginLeft: "5px" }}>{filename}</div>
