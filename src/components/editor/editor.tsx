@@ -4,16 +4,9 @@ import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { convertTheme } from 'monaco-vscode-textmate-theme-converter/lib/cjs';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
-import styled, { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import Tabs from './components/tabs/tabs';
 import Breadcrumbs from './components/breadcrumbs/breadcrumbs';
-import { getIconForFile } from 'vscode-material-icon-theme-js';
-
-const TabContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
 
 export default function Editor() {
   const theme: any = useTheme();
@@ -101,24 +94,7 @@ export default function App() {
 
   return (
     <div style={{ width: "100%" }}>
-      <Tabs>
-        <TabContainer>
-          <img
-            alt=""
-            style={{ height: "18px" }}
-            src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile('index.js')}`} 
-          />
-          <div style={{ marginLeft: "5px" }}>index.js</div>
-        </TabContainer>
-        <TabContainer>
-          <img
-            alt=""
-            style={{ height: "18px" }}
-            src={`https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons/${getIconForFile('index.html')}`} 
-          />
-          <div style={{ marginLeft: "5px" }}>index.html</div>
-        </TabContainer>
-      </Tabs>
+      <Tabs filePaths={['src/index.tsx', 'src/index.html']} />       
       <Breadcrumbs>
         <div>src</div>
         <div>index.tsx</div>

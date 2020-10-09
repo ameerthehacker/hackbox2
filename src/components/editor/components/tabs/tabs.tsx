@@ -1,4 +1,6 @@
-import React, { ReactNode, Children, useState } from 'react';
+import Icon from '@src/components/icon/icon';
+import { getBasename } from '@src/utils/utils';
+import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -41,21 +43,36 @@ const Tab = ({ isSelected, children, onClick }: TabProps) => {
   )
 }
 
+const FileNameContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 type TabsProps = {
-  children: ReactNode;
+  filePaths?: string[];
 }
 
-export default function Tabs({ children }: TabsProps) {
+export default function Tabs({ filePaths = [] }: TabsProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <Container>
       {
-        Children.map(children, (child, index) => (
-          <Tab isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
-            {child}
-          </Tab>
-        ))
+        filePaths.map((filePath, index) => {
+          const filename = getBasename(filePath);
+
+          return (
+            <Tab isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
+              <FileNameContainer>
+                <Icon entityName={filename} />
+                <div style={{ marginLeft: "5px" }}>
+                  {filename}
+                </div>
+              </FileNameContainer>
+            </Tab>
+          );
+        })
       }
     </Container>
   )

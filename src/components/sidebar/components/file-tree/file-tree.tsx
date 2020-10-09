@@ -7,7 +7,7 @@ import { getIconForFile, getIconForFolder, getIconForOpenFolder } from 'vscode-m
 const NodeContainer = styled.div`
   display: flex;
   padding: 4px;
-  padding-left: 16px;
+  padding-left: 20px;
   align-items: flex-baseline;
   user-select: none;
 `;
@@ -30,6 +30,10 @@ const TreeCSS = createGlobalStyle`
   :not(.selected-node-wrapper).node-wrapper:hover {
     background: ${(props: any) => props.theme.colors['list.hoverBackground']};
     color: ${(props: any) => props.theme.colors['list.hoverForeground']};
+  }
+
+  .node-wrapper {
+    user-select: none;
   }
 `;
 

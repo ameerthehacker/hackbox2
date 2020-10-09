@@ -1,4 +1,6 @@
-import React, { Children, ReactNode, useState } from 'react';
+import Icon from '@src/components/icon/icon';
+import { getBasename } from '@src/utils/utils';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -6,7 +8,7 @@ const Container = styled.div`
 `;
 
 type OpenFileProps = {
-  children: ReactNode;
+  filePaths?: string[];
   isSelected?: boolean;
 }
 
@@ -26,27 +28,38 @@ type OpenFileContainerProps = {
 }
 
 const OpenFileContainer = styled.div<OpenFileContainerProps>`
-  margin-left: 15px;
+  margin-left: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-export default function OpenFiles({ children }: OpenFileProps) {
+const FileNameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export default function OpenFiles({ filePaths = [] }: OpenFileProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <Container>
-      {Children.map(children, (child, index) => (
-        <OpenFile isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
-          <OpenFileContainer>
-            <div className="codicon codicon-close" style={{ visibility: selectedIndex === index? 'visible': 'hidden' }} />
-            <div style={{ marginLeft: "5px" }}>
-              {child}
-            </div>
-          </OpenFileContainer>
-        </OpenFile>
-      ))}
+      {filePaths.map((filePath, index) => {
+        const filename = getBasename(filePath);
+
+        return (
+          <OpenFile isSelected={selectedIndex === index} key={index} onClick={() => setSelectedIndex(index)}>
+            <OpenFileContainer>
+              <div className="codicon codicon-close" style={{ visibility: selectedIndex === index? 'visible': 'hidden' }} />
+              <FileNameContainer>
+                <Icon entityName={filename} />
+                <div style={{ marginLeft: "5px" }}>{filename}</div>
+              </FileNameContainer>
+            </OpenFileContainer>
+          </OpenFile>
+        )
+      })}
     </Container>
   );
 }
