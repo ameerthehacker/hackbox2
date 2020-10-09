@@ -83,7 +83,7 @@ export default function SideBar() {
           Explorer
         </Header>
         <Sections>
-          <Section title="Open Files" defaultOpen={true}>
+          <Section title="Open Editors" defaultOpen={true}>
             <OpenFiles
               filePaths={[
                 'src/index.tsx',
