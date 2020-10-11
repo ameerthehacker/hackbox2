@@ -23,7 +23,6 @@ module.exports = {
       }),
     ],
     configure: (webpackConfig => {
-      webpackConfig.resolve.extensions = ['.wasm', ...webpackConfig.resolve.extensions];
       const scopePluginIndex = webpackConfig.resolve.plugins.findIndex(
         ({ constructor }) => constructor && constructor.name === 'ModuleScopePlugin'
       );
