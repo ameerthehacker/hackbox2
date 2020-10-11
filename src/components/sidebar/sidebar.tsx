@@ -75,26 +75,44 @@ const Section = ({ title, children, defaultOpen }: SectionProps) => {
   )
 }
 
-export default function SideBar() {
+type SideBarProps = { selectedContainer?: string }
+
+export default function SideBar({ selectedContainer = 'files' }: SideBarProps) {
   const openFiles = useStore(state => state.openFiles);
 
   return (
     <>
       <CollapseCSS />
       <Container>
-        <Header>
-          Explorer
-        </Header>
-        <Sections>
-          <Section title="Open Editors" defaultOpen={true}>
-            <OpenFiles
-              filePaths={openFiles}
-            /> 
-          </Section>
-          <Section title="Hackbox" defaultOpen={true}>
-            <FileTree />
-          </Section>
-        </Sections>
+        <div style={{ display: selectedContainer === 'files'? 'block': 'none' }}>
+          <Header>
+            Explorer
+          </Header>
+          <Sections>
+            <Section title="Open Editors" defaultOpen={true}>
+              <OpenFiles
+                filePaths={openFiles}
+              /> 
+            </Section>
+            <Section title="Hackbox" defaultOpen={true}>
+              <FileTree />
+            </Section>
+          </Sections>
+        </div>
+        <div style={{ display: selectedContainer === 'search'? 'block': 'none' }}>
+          <Header>
+            Search
+          </Header>
+        </div>
+        <div style={{ display: selectedContainer === 'extensions'? 'block': 'none' }}>
+          <Header>
+            Extensions
+          </Header>
+          <Sections>
+            <Section title="Recommended" defaultOpen={true}>
+            </Section>
+          </Sections>
+        </div>
       </Container>
     </>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SideBar from '@src/components/sidebar/sidebar';
 import ActivityBar from '@src/components/activity-bar/activity-bar';
@@ -20,6 +20,7 @@ export default function App() {
   const setOnigasmLoaded = useStore(state => state.setOnigasmLoaded);
   const setOpenFiles = useStore(state => state.setOpenFiles);
   const setSelectedFile = useStore(state => state.setSelectedFile);
+  const [selectedSidebarContainer, setSelectedSidebarContainer] = useState('files');
 
   useEffect(() => {
     setOpenFiles(['src/index.tsx', 'src/index.css', 'public/index.html', 'package.json']);
@@ -32,8 +33,8 @@ export default function App() {
   return (
     <Container>
       <Workspace>
-        <ActivityBar onSidebarItemClicked={name => console.log(name)} />
-        <SideBar />
+        <ActivityBar onSidebarItemClicked={name => name && setSelectedSidebarContainer(name)} />
+        <SideBar selectedContainer={selectedSidebarContainer} />
         <Editor />
       </Workspace>
       <Statusbar />
