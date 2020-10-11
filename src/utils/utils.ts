@@ -58,6 +58,19 @@ export function convertFilesToTree(files: Record<string, string>) {
   return tree;
 }
 
+export function getLanguageNameFromExt(filename: string) {
+  const extLanguageMap = {
+    'tsx': 'TypeScript',
+    'js': 'JavaScript',
+    'css': 'CSS',
+    'html': 'HTML',
+    'json': 'JSON'
+  } as any;
+  const [, ext] = filename.split('.');
+
+  return extLanguageMap[ext];
+}
+
 export function getLanguageFromExt(filename: string) {
   const extLanguageMap = {
     'tsx': 'javascript',

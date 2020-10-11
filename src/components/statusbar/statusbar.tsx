@@ -1,3 +1,5 @@
+import { useStore } from '@src/store';
+import { getLanguageNameFromExt } from '@src/utils/utils';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -23,10 +25,12 @@ const Content = styled.div`
 `;
 
 export default function Statusbar() {
+  const selectedFile = useStore(state => state.selectedFile);
+
   return (
     <Container>
       <Content>
-        <div>JavaScript</div>
+        <div>{getLanguageNameFromExt(selectedFile)}</div>
         <div className="codicon codicon-bell-dot" />
       </Content>
     </Container>
