@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { convertTheme } from 'monaco-vscode-textmate-theme-converter/lib/cjs';
@@ -33,7 +33,7 @@ export default function Editor() {
     monacoEditor.languages.register({ id: 'typescript' });
     monacoEditor.languages.register({ id: 'json' });
 
-    monacoEditor.editor.defineTheme(theme.id, convertTheme(theme));
+    monacoEditor.editor.defineTheme(theme.id || 'unknown', convertTheme(theme));
   }, [theme]);
   const loadEditorModel = (selectedFile: string) => {
     if (monacoEditorRef.current && selectedFile) {
@@ -51,6 +51,8 @@ export default function Editor() {
       try {
         validTheme = JSON.parse(value);
       } catch {}
+
+      console.log('changed', validTheme);
 
       if (validTheme) setTheme(validTheme);
     },
@@ -160,7 +162,7 @@ export default function Editor() {
     }
 
     wireTmGrammars(monaco, registry, grammars, editor);
-  }, [setCurrentColor]);
+  }, [setCurrentColor, setIsColorPickerVisisble]);
 
   return (
     <div style={{ width: "100%" }}>
@@ -175,7 +177,7 @@ export default function Editor() {
 
                 loadEditorModel(selectedFile);
               }}
-              theme={theme.id}
+              theme={theme.id || 'unknown'}
               height="calc(100% - 67px)" 
               options={{
                 minimap: {
