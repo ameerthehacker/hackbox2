@@ -27,6 +27,7 @@ export default function App() {
   const setOnigasmLoaded = useStore(state => state.setOnigasmLoaded);
   const setOpenFiles = useStore(state => state.setOpenFiles);
   const setSelectedFile = useStore(state => state.setSelectedFile);
+  const isColorPickerVisible = useStore(state => state.isColorPickerVisible);
   const theme = useStore(state => state.theme);
   const [selectedSidebarContainer, setSelectedSidebarContainer] = useState('files');
 
@@ -47,9 +48,11 @@ export default function App() {
           <Editor />
         </Workspace>
         <Statusbar />
-        <ColorPickerContainer>
-          <ColorPicker />
-        </ColorPickerContainer>
+        {isColorPickerVisible && (
+          <ColorPickerContainer>
+            <ColorPicker />
+          </ColorPickerContainer>
+        )}
       </Container>
     </ThemeProvider>
   );

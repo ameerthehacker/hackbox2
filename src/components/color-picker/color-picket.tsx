@@ -8,7 +8,7 @@ export default function ColorPicker() {
   const setCurrentColor = useStore(state => state.setCurrentColor);
   const onColorChange = useDebouncedCallback((color: ColorResult) => {
     setCurrentColor(color.hex);
-  }, 300);
+  }, 200);
 
   return <SketchPicker color={color || '#fff'} onChangeComplete={color => {
     setColor(color.hex);

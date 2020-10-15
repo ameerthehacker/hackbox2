@@ -12,6 +12,8 @@ type State = {
   setTheme: (theme: any) => void;
   currentColor: string;
   setCurrentColor: (color: string) => void;
+  isColorPickerVisible: boolean;
+  setIsColorPickerVisible: (isVisible: boolean) => void;
 }
 
 export const useStore = createStore<State>(set => ({
@@ -24,5 +26,7 @@ export const useStore = createStore<State>(set => ({
   theme: shadesOfPurple,
   setTheme: (theme) => set(() => ({ theme })),
   currentColor: '',
-  setCurrentColor: (color) => set(() => ({ currentColor: color }))
+  setCurrentColor: (color) => set(() => ({ currentColor: color })),
+  isColorPickerVisible: false,
+  setIsColorPickerVisible: (isVisible: boolean) => set(() => ({ isColorPickerVisible: isVisible }))
 }));

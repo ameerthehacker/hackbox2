@@ -25,6 +25,7 @@ export default function Editor() {
   const monacoEditorRef = useRef<MonacoEditor|null>();
   const setTheme = useStore(state => state.setTheme);
   const lastColorPosition = useRef<WordPosition|null>();
+  const setIsColorPickerVisisble = useStore(state => state.setIsColorPickerVisible);
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
     monacoEditor.languages.register({ id: 'html' });
@@ -90,12 +91,14 @@ export default function Editor() {
 
         if (isHash) {
           setCurrentColor(`#${wordData.word}`);
+          setIsColorPickerVisisble(true);
           lastColorPosition.current = {
             ...wordData,
             lineNumber: evt.position.lineNumber
           };
         } else {
           lastColorPosition.current = null;
+          setIsColorPickerVisisble(false);
         }
       }
     });
