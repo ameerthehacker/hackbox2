@@ -6,6 +6,7 @@ import Statusbar from '@src/components/statusbar/statusbar';
 import Editor from '@src/components/editor/editor';
 import { useStore } from '@src/store';
 import { loadWASM } from 'onigasm';
+import ColorPicker from '@src/components/color-picker/color-picket';
 
 const Container = styled.div`
   height: 100vh;
@@ -14,6 +15,12 @@ const Container = styled.div`
 const Workspace = styled.div`
   display: flex;
   height: calc(100vh - 26px);
+`;
+
+const ColorPickerContainer = styled.div`
+  position: absolute;
+  bottom: 40px;
+  right: 20px;
 `;
 
 export default function App() {
@@ -40,6 +47,9 @@ export default function App() {
           <Editor />
         </Workspace>
         <Statusbar />
+        <ColorPickerContainer>
+          <ColorPicker />
+        </ColorPickerContainer>
       </Container>
     </ThemeProvider>
   );
