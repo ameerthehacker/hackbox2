@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+// disable switching stuff in activitybar for now
+const enableClickInActivityBar = false;
+
 const Container = styled.div`
   background: ${(props) => props.theme.colors['activityBar.background']};
   color: ${(props) => props.theme.colors['activityBar.foreground']};
@@ -41,6 +44,8 @@ type ActivityBarProps = {
 
 export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) {
   const onClicked = (fn: (name: string | null) => void, name: string) => () => {
+    if (!enableClickInActivityBar) return;
+
     setSelectedItem(name);
 
     if (name === selectedItem) {
@@ -66,6 +71,12 @@ export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) 
           onClick={onClicked(onSidebarItemClicked, 'search')} 
         >
           <div className="codicon codicon-search" />
+        </ActivityBarItem>
+        <ActivityBarItem 
+          isSelected={selectedItem === 'scm'} 
+          onClick={onClicked(onSidebarItemClicked, 'scm')} 
+        >
+          <div className="codicon codicon-source-control" />
         </ActivityBarItem>
         <ActivityBarItem 
           isSelected={selectedItem === 'extensions'} 

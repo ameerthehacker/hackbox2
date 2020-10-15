@@ -21,6 +21,7 @@
     "onigasm": "^2.2.5",
     "react": "^16.13.1",
     "react-collapse": "^5.0.1",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "react-hyper-tree": "^0.2.18",
     "react-monaco-editor": "^0.40.0",

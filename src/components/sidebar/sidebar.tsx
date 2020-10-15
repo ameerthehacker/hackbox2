@@ -104,14 +104,15 @@ export default function SideBar({ selectedContainer = 'files' }: SideBarProps) {
             Search
           </Header>
         </div>
+        <div style={{ display: selectedContainer === 'scm'? 'block': 'none' }}>
+          <Header>
+            Search
+          </Header>
+        </div>
         <div style={{ display: selectedContainer === 'extensions'? 'block': 'none' }}>
           <Header>
             Extensions
           </Header>
-          <Sections>
-            <Section title="Recommended" defaultOpen={true}>
-            </Section>
-          </Sections>
         </div>
       </Container>
     </>
