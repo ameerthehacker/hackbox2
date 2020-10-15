@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import App from './pages/app/app';
 import * as serviceWorker from './serviceWorker';
-import shadesOfPurple from './themes/shades-of-purple';
 import 'vscode-codicons/dist/codicon.css';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { FILES } from './templates/react';
@@ -28,10 +27,8 @@ const GlobalStyle = createGlobalStyle`
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={shadesOfPurple}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
+    <GlobalStyle />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

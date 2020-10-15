@@ -1,4 +1,5 @@
 import createStore from 'zustand';
+import shadesOfPurple from './themes/shades-of-purple';
 
 type State = {
   isOnigasmLoaded: boolean
@@ -6,7 +7,9 @@ type State = {
   openFiles: string[],
   setOpenFiles: (files: string[]) => void,
   selectedFile: string;
-  setSelectedFile: (filePath: string) => void
+  setSelectedFile: (filePath: string) => void,
+  theme: any;
+  setTheme: (theme: any) => void;
 }
 
 export const useStore = createStore<State>(set => ({
@@ -15,5 +18,7 @@ export const useStore = createStore<State>(set => ({
   openFiles: [],
   setOpenFiles: (files) => set((state) => ({ openFiles: files })),
   selectedFile: '',
-  setSelectedFile: (filePath) => set((state) => ({ selectedFile: filePath }))
+  setSelectedFile: (filePath) => set((state) => ({ selectedFile: filePath })),
+  theme: shadesOfPurple,
+  setTheme: (theme) => set(() => ({ theme }))
 }));

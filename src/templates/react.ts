@@ -1,3 +1,5 @@
+import shadesOfPurple from '@src/themes/shades-of-purple';
+
 export const FILES = {
   'public/index.html': `<!DOCTYPE html>
 <html>
@@ -18,6 +20,7 @@ ReactDOM.render(<h1>hello world!</h1>, document.getElementById('root'));
   padding: 0;
 }
 `,
+  'theme.json': JSON.stringify(shadesOfPurple, null, 2),
   'package.json': `{
   name: "hackbox",
   author: "Ameer Jhan",

@@ -9,6 +9,7 @@ import Tabs from './components/tabs/tabs';
 import Breadcrumbs from './components/breadcrumbs/breadcrumbs';
 import { useStore } from '@src/store';
 import EmptyState from './components/empty-state/empty-state';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function Editor() {
   const theme: any = useTheme();
@@ -16,6 +17,7 @@ export default function Editor() {
   const selectedFile = useStore(state => state.selectedFile);
   const openFiles = useStore(state => state.openFiles);
   const monacoEditorRef = useRef<MonacoEditor|null>();
+  const setTheme = useStore(state => state.setTheme);
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
     monacoEditor.languages.register({ id: 'html' });
@@ -34,6 +36,18 @@ export default function Editor() {
       }
     }
   }
+  const onChangeDebounced = useDebouncedCallback(
+    (value: string) => {
+      let validTheme = null;
+
+      try {
+        validTheme = JSON.parse(value);
+      } catch {}
+
+      if (validTheme) setTheme(validTheme);
+    },
+    500
+  );
 
   useEffect(() => {
     loadEditorModel(selectedFile);
@@ -123,6 +137,9 @@ export default function Editor() {
               editorWillMount={onEditorWillMount}
               editorDidMount={onEditorDidMount}
               language="javascript"
+              onChange={(value) => {
+                onChangeDebounced.callback(value);
+              }}
             />
           </>
         ): <EmptyState />
