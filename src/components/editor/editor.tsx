@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { convertTheme } from 'monaco-vscode-textmate-theme-converter/lib/cjs';
@@ -11,13 +11,20 @@ import { useStore } from '@src/store';
 import EmptyState from './components/empty-state/empty-state';
 import { useDebouncedCallback } from 'use-debounce';
 
+interface WordPosition extends monaco.editor.IWordAtPosition {
+  lineNumber: number;
+}
+
 export default function Editor() {
   const theme: any = useTheme();
   const isOnigasmLoaded = useStore(state => state.isOnigasmLoaded);
   const selectedFile = useStore(state => state.selectedFile);
   const openFiles = useStore(state => state.openFiles);
+  const setCurrentColor = useStore(state => state.setCurrentColor);
+  const currentColor = useStore(state => state.currentColor);
   const monacoEditorRef = useRef<MonacoEditor|null>();
   const setTheme = useStore(state => state.setTheme);
+  const lastColorPosition = useRef<WordPosition|null>();
   const onEditorWillMount = useCallback((monacoEditor: typeof monaco) => {
     monacoEditor.languages.register({ id: 'css' });
     monacoEditor.languages.register({ id: 'html' });
@@ -53,7 +60,46 @@ export default function Editor() {
     loadEditorModel(selectedFile);
   }, [selectedFile])
 
+  useEffect(() => {
+    if (lastColorPosition.current && currentColor.substring(1) !== lastColorPosition.current.word) {
+      monacoEditorRef.current?.editor?.executeEdits(lastColorPosition.current.word, [
+        {
+          range: {
+            startLineNumber: lastColorPosition.current.lineNumber,
+            endLineNumber: lastColorPosition.current.lineNumber,
+            startColumn: lastColorPosition.current.startColumn,
+            endColumn: lastColorPosition.current.endColumn
+          },
+          text: currentColor.substring(1)
+        }
+      ])
+    }
+  }, [currentColor]);
+
   const onEditorDidMount = useCallback((editor: monaco.editor.ICodeEditor) => {
+    editor.onDidChangeCursorPosition((evt) => {
+      const wordData = editor.getModel()?.getWordAtPosition(evt.position);
+
+      if (wordData) {
+        const isHash = editor.getModel()?.getValueInRange({
+          startLineNumber: evt.position.lineNumber,
+          endLineNumber: evt.position.lineNumber,
+          startColumn: wordData.startColumn - 1,
+          endColumn: wordData.startColumn
+        }) === '#';
+
+        if (isHash) {
+          setCurrentColor(`#${wordData.word}`);
+          lastColorPosition.current = {
+            ...wordData,
+            lineNumber: evt.position.lineNumber
+          };
+        } else {
+          lastColorPosition.current = null;
+        }
+      }
+    });
+
     const registry = new Registry({
       getGrammarDefinition: async (scopeName) => {
           switch (scopeName) {
@@ -111,7 +157,7 @@ export default function Editor() {
     }
 
     wireTmGrammars(monaco, registry, grammars, editor);
-  }, []);
+  }, [setCurrentColor]);
 
   return (
     <div style={{ width: "100%" }}>

@@ -10,15 +10,19 @@ type State = {
   setSelectedFile: (filePath: string) => void,
   theme: any;
   setTheme: (theme: any) => void;
+  currentColor: string;
+  setCurrentColor: (color: string) => void;
 }
 
 export const useStore = createStore<State>(set => ({
   isOnigasmLoaded: false,
   setOnigasmLoaded: () => set(() => ({ isOnigasmLoaded: true })),
   openFiles: [],
-  setOpenFiles: (files) => set((state) => ({ openFiles: files })),
+  setOpenFiles: (files) => set(() => ({ openFiles: files })),
   selectedFile: '',
-  setSelectedFile: (filePath) => set((state) => ({ selectedFile: filePath })),
+  setSelectedFile: (filePath) => set(() => ({ selectedFile: filePath })),
   theme: shadesOfPurple,
-  setTheme: (theme) => set(() => ({ theme }))
+  setTheme: (theme) => set(() => ({ theme })),
+  currentColor: '',
+  setCurrentColor: (color) => set(() => ({ currentColor: color }))
 }));
