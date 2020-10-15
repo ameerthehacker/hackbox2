@@ -10,7 +10,7 @@ export default function ColorPicker() {
     setCurrentColor(color.hex);
   }, 200);
 
-  return <SketchPicker color={color || '#fff'} onChangeComplete={color => {
+  return <SketchPicker color={color || '#fff'} onChange={color => {
     setColor(color.hex);
     onColorChange.callback(color);
   }} />
